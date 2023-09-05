@@ -21,9 +21,9 @@ class CharacterParams {
 
   String get path {
     if (characterStatus != null && searchName != null) {
-      return 'page=$pageIndex&name=$searchName&status=$characterStatus';
+      return 'page=$pageIndex&name=$searchName&status=${characterStatus!.name}';
     }
-    if (characterStatus != null) return 'page=$pageIndex&status=$characterStatus';
+    if (characterStatus != null) return 'page=$pageIndex&status=${characterStatus!.name}';
     if (searchName != null) return 'page=$pageIndex&name=$searchName';
     return 'page=$pageIndex';
   }

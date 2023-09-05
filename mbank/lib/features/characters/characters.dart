@@ -4,3 +4,4 @@ export 'domain/repository/character_repo.dart';
 export 'domain/usecase/get_characters_usecase.dart';
 export 'presentation/business/character_cubit.dart';
 export 'presentation/view/characters_view.dart';
+export 'presentation/widgets/character_status_filter.dart';

@@ -12,7 +12,7 @@ class CharacterCubit extends Cubit<CharacterState> {
 
   final List<Character> characters = [];
 
-  Future<(List<Character>?, int?, Exception?)> getCharacters([int page = 0]) async {
+  Future<(List<Character>?, int?, Exception?)> getCharacters([int page = 1]) async {
     final params = CharacterParams(
       page,
       characterStatus: state.characterStatus,

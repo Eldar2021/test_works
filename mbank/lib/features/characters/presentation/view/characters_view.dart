@@ -5,9 +5,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mbank/features/features.dart';
 import 'package:mbank/utils/utils.dart';
 
-class CharactersView extends StatelessWidget {
+class CharactersView extends StatefulWidget {
   const CharactersView({super.key});
 
+  @override
+  State<CharactersView> createState() => _CharactersViewState();
+}
+
+class _CharactersViewState extends State<CharactersView> with PaginationMixin<Character, CharactersView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +26,7 @@ class CharactersView extends StatelessWidget {
                 title: const Text('Filter By Status'),
                 content: BlocProvider.value(
                   value: context.read<CharacterCubit>(),
-                  child: const CharacterStatusFilter(),
+                  child: CharacterStatusFilter(pageController.refresh),
                 ),
               );
             },
@@ -34,42 +39,19 @@ class CharactersView extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<CharacterCubit, CharacterState>(
-        builder: (context, state) {
-          // return const CharacterViewBody();
-          return switch (state.status) {
-            FetchStatus.failure => const Text('Error!'),
-            FetchStatus.loading => const Center(child: CircularProgressIndicator()),
-            FetchStatus.success => const CharacterViewBody(),
-          };
-        },
-      ),
-    );
-  }
-}
-
-class CharacterViewBody extends StatefulWidget {
-  const CharacterViewBody({super.key});
-
-  @override
-  State<CharacterViewBody> createState() => _CharacterViewBodyState();
-}
-
-class _CharacterViewBodyState extends State<CharacterViewBody> with PaginationMixin<Character, CharacterViewBody> {
-  @override
-  Widget build(BuildContext context) {
-    return PagedListView<int, Character>(
-      pagingController: pagingController,
-      padding: const EdgeInsets.fromLTRB(14, 20, 14, 30),
-      builderDelegate: PagedChildBuilderDelegate<Character>(
-        itemBuilder: (context, item, index) => Card(
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundImage: CachedNetworkImageProvider(item.image),
+      body: PagedListView<int, Character>(
+        pagingController: pageController,
+        padding: const EdgeInsets.fromLTRB(14, 20, 14, 30),
+        builderDelegate: PagedChildBuilderDelegate<Character>(
+          itemBuilder: (context, item, index) => Card(
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundImage: CachedNetworkImageProvider(item.image),
+              ),
+              title: Text(item.name),
+              subtitle: Text('${item.species}  ${item.status.name}'),
+              trailing: Text('${item.id}'),
             ),
-            title: Text(item.name),
-            subtitle: Text('${item.species}  ${item.status.name}'),
-            trailing: Text('${item.id}'),
           ),
         ),
       ),
@@ -79,31 +61,5 @@ class _CharacterViewBodyState extends State<CharacterViewBody> with PaginationMi
   @override
   Future<(List<Character>?, int?, Exception?)> fetchData(int page) {
     return context.read<CharacterCubit>().getCharacters(page);
-  }
-}
-
-class CharacterStatusFilter extends StatelessWidget {
-  const CharacterStatusFilter({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final cubit = context.watch<CharacterCubit>();
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SwitchListTile.adaptive(
-          title: Text(CharacterStatus.alive.name),
-          value: CharacterStatus.alive == cubit.state.characterStatus,
-          onChanged: (v) {
-            context.read<CharacterCubit>().changeFilterStautus(CharacterStatus.alive);
-          },
-        ),
-        SwitchListTile.adaptive(
-          title: Text(CharacterStatus.dead.name),
-          value: CharacterStatus.dead == cubit.state.characterStatus,
-          onChanged: (v) => context.read<CharacterCubit>().changeFilterStautus(CharacterStatus.dead),
-        ),
-      ],
-    );
   }
 }

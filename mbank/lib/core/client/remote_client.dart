@@ -35,8 +35,7 @@ final class RemoteClient {
       final response = await _client.get(Uri.parse(path), headers: header);
       return responseType<T>(response, fromJson);
     } catch (e) {
-      throw Exception(e);
-      // return Future.value((null, e));
+      return Future.value((null, Exception(e)));
     }
   }
 }
