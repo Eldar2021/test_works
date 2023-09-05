@@ -1,7 +1,5 @@
 part of 'character_cubit.dart';
 
-enum FetchStatus { loading, success, failure }
-
 class CharacterState extends Equatable {
   const CharacterState({
     this.status = FetchStatus.loading,

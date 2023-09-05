@@ -23,7 +23,14 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider(
-          create: (context) => EpisodsCubit(),
+          create: (context) => EpisodeCubit(
+            GetEpisodsUsecase(
+              EpisodeRepoImpl(
+                remoteClient: context.read<RemoteClient>(),
+                networkClient: context.read<NetworkClient>(),
+              ),
+            ),
+          ),
         ),
       ],
       child: MaterialApp(

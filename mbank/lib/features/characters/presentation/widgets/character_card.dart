@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
+import 'package:mbank/app/app.dart';
 import 'package:mbank/features/features.dart';
 
 class CharacterCard extends StatelessWidget {
@@ -17,6 +19,12 @@ class CharacterCard extends StatelessWidget {
         title: Text(character.name),
         subtitle: Text('${character.species}  ${character.status.name}'),
         trailing: Text('${character.id}'),
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            AppRouter.characterDetail,
+            arguments: character,
+          );
+        },
       ),
     );
   }

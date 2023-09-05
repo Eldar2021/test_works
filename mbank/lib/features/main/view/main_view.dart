@@ -21,7 +21,7 @@ class _MainViewState extends State<MainView> with AutomaticKeepAliveClientMixin 
       body: PageView(
         controller: controller,
         onPageChanged: context.read<MainCubit>().change,
-        children: const [CharactersView(), EpisodsPage()],
+        children: const [CharactersView(), EpisodsView()],
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (val) async {
