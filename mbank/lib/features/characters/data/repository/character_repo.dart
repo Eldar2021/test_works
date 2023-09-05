@@ -13,14 +13,14 @@ class CharacterRepoImpl implements CharacterRepo {
   final NetworkClient networkClient;
 
   @override
-  Future<(CharacterPageData?, Exception?)> getCharacters(CharacterParams params) async {
+  Future<(CharacterPageData?, MbankException?)> getCharacters(CharacterParams params) async {
     if (await networkClient.checkInternetConnection()) {
       return remoteClient.get<CharacterPageData>(
         '${ApiConst.characters}${params.path}',
         fromJson: CharacterPageData.fromJson,
       );
     } else {
-      return Future.value((null, Exception("Connection is not established")));
+      return Future.value((null, ConnectionException()));
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mbank/core/core.dart';
 
 import 'package:mbank/features/features.dart';
 
@@ -12,7 +13,7 @@ class CharacterCubit extends Cubit<CharacterState> {
 
   final List<Character> characters = [];
 
-  Future<(List<Character>?, int?, Exception?)> getCharacters([int page = 1]) async {
+  Future<(List<Character>?, int?, MbankException?)> getCharacters([int page = 1]) async {
     final params = CharacterParams(
       page,
       characterStatus: state.characterStatus,
@@ -23,12 +24,16 @@ class CharacterCubit extends Cubit<CharacterState> {
       characters.addAll(data.results);
       emit(state.copyWith(status: FetchStatus.success, characters: characters));
     } else {
-      emit(state.copyWith(status: FetchStatus.failure));
+      emit(state.copyWith(status: FetchStatus.failure, exception: exception));
     }
     return (data?.results, data?.info.pages, exception);
   }
 
-  Future<void> changeFilterStautus(CharacterStatus? characterStatus) async {
+  void changeFilterStautus(CharacterStatus? characterStatus) {
     emit(state.copyWith(characterStatus: characterStatus));
+  }
+
+  void changeSeractName(String? searchName) {
+    emit(state.copyWith(searchName: searchName));
   }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:mbank/core/core.dart';
 
 mixin PaginationMixin<P, T extends StatefulWidget> on State<T> {
   final pageController = PagingController<int, P>(firstPageKey: 1);
-  Future<(List<P>?, int?, Exception?)> fetchData(int page);
+  Future<(List<P>?, int?, MbankException?)> fetchData(int page);
 
   @override
   void initState() {

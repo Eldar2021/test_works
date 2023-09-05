@@ -5,3 +5,5 @@ export 'domain/usecase/get_characters_usecase.dart';
 export 'presentation/business/character_cubit.dart';
 export 'presentation/view/characters_view.dart';
 export 'presentation/widgets/character_status_filter.dart';
+export 'presentation/widgets/search_character.dart';
+export 'presentation/widgets/character_card.dart';

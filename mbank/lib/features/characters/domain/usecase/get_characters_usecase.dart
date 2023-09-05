@@ -7,7 +7,7 @@ class GetCharactersUsecase extends UseCase<CharacterPageData, CharacterParams> {
   final CharacterRepo reposiory;
 
   @override
-  Future<(CharacterPageData?, Exception?)> call(CharacterParams params) {
+  Future<(CharacterPageData?, MbankException?)> call(CharacterParams params) {
     return reposiory.getCharacters(params);
   }
 }
@@ -21,10 +21,10 @@ class CharacterParams {
 
   String get path {
     if (characterStatus != null && searchName != null) {
-      return 'page=$pageIndex&name=$searchName&status=${characterStatus!.name}';
+      return 'page=$pageIndex&name=${searchName!.toLowerCase()}&status=${characterStatus!.name}';
     }
     if (characterStatus != null) return 'page=$pageIndex&status=${characterStatus!.name}';
-    if (searchName != null) return 'page=$pageIndex&name=$searchName';
+    if (searchName != null) return 'page=$pageIndex&name=${searchName!.toLowerCase()}';
     return 'page=$pageIndex';
   }
 

@@ -15,17 +15,17 @@ class CharacterState extends Equatable {
   final CharacterStatus? characterStatus;
   final String? searchName;
   final List<Character>? characters;
-  final Exception? exception;
+  final MbankException? exception;
 
   @override
-  List<Object?> get props => [status, characterStatus, exception];
+  List<Object?> get props => [status, characterStatus, exception, searchName];
 
   CharacterState copyWith({
     FetchStatus? status,
     CharacterStatus? characterStatus,
     String? searchName,
     List<Character>? characters,
-    Exception? exception,
+    MbankException? exception,
   }) {
     return CharacterState(
       status: status ?? this.status,

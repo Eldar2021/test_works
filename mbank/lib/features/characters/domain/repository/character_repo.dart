@@ -1,5 +1,6 @@
+import 'package:mbank/core/core.dart';
 import 'package:mbank/features/characters/characters.dart';
 
 abstract class CharacterRepo {
-  Future<(CharacterPageData?, Exception?)> getCharacters(CharacterParams param);
+  Future<(CharacterPageData?, MbankException?)> getCharacters(CharacterParams param);
 }

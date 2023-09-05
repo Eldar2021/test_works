@@ -1,5 +1,7 @@
+import 'package:mbank/core/core.dart';
+
 abstract class UseCase<T, P> {
   const UseCase();
 
-  Future<(T?, Exception?)> call(P params);
+  Future<(T?, MbankException?)> call(P params);
 }
